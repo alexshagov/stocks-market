@@ -16,8 +16,32 @@
               "type": "object",
               "required": [
                   "name",
-                  "reference"
-              ]
+                  "reference",
+                  "bearer"
+              ],
+              "properties": {
+                  "bearer": {
+                      "type": "object",
+                      "required": [
+                          "data"
+                      ],
+                      "properties": {
+                          "data": {
+                              "type": "object",
+                              "required": [
+                                  "attributes"
+                              ],
+                              "attributes": {
+                                  "type": "object",
+                                  "required": [
+                                      "name",
+                                      "reference"
+                                  ]
+                              }
+                          }
+                      }
+                  }
+              }
           },
           "reference": {
             "type": "string"

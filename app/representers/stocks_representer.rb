@@ -6,5 +6,6 @@ class StocksRepresenter < Roar::Decorator
   attributes do
     property :name
     property :reference
+    property :bearer, decorator: BearerRepresenter
   end
 end
