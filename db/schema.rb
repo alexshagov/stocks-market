@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_08_131605) do
+ActiveRecord::Schema.define(version: 2020_09_08_160701) do
 
   create_table "bearers", force: :cascade do |t|
     t.string "name", null: false
@@ -27,7 +27,9 @@ ActiveRecord::Schema.define(version: 2020_09_08_131605) do
     t.string "reference", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "deleted_at"
     t.index ["bearer_id"], name: "index_stocks_on_bearer_id"
+    t.index ["deleted_at"], name: "index_stocks_on_deleted_at"
     t.index ["name"], name: "index_stocks_on_name", unique: true
     t.index ["reference"], name: "index_stocks_on_reference", unique: true
   end

@@ -21,6 +21,13 @@ module Api
           action: Stocks::Update,
           representer: StocksRepresenter)
       end
+
+      def destroy
+        perform_destroy!(
+          entity: Stock.find(params[:id]),
+          action: Stocks::Destroy
+        )
+      end
     end
   end
 end

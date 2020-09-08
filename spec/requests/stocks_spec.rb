@@ -89,4 +89,15 @@ RSpec.describe '/api/v1/stocks', type: :request do
     end
   end
 
+  describe 'DELETE /stocks/:id' do
+    let(:bearer) { create(:bearer) }
+    let(:stock) { create(:stock, bearer: bearer) }
+
+    it 'marks record as deleted' do
+      delete "/api/v1/stocks/#{stock.id}"
+
+      expect(response.status).to eq 204
+      expect(stock.reload.deleted?).to eq true
+    end
+  end
 end
