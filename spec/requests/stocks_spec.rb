@@ -68,6 +68,42 @@ RSpec.describe '/api/v1/stocks', type: :request do
         expect(JSON.parse(response.body)["data"]["attributes"]["name"]).to eq params[:name]
         expect(response).to match_json_schema('stock')
       end
+
+      context 'when bearer is changed to an existing one' do
+        let(:another_bearer) { create(:bearer) }
+
+        let(:params) do
+          {
+            name: 'updated name',
+            bearer: { name: another_bearer.name }
+          }
+        end
+
+        it 'updates a stock record and assigns it to a new bearer' do
+          patch "/api/v1/stocks/#{stock.id}", params: params
+
+          expect(response.status).to eq 200
+          expect(response).to match_json_schema('stock')
+          expect(stock.reload.bearer).to eq another_bearer
+        end
+      end
+
+      context 'when new bearer name provided' do
+        let(:params) do
+          {
+            name: 'updated name',
+            bearer: { name: 'new bearer name' }
+          }
+        end
+
+        it 'updates a stock record and creates a new bearer' do
+          patch "/api/v1/stocks/#{stock.id}", params: params
+
+          expect(response.status).to eq 200
+          expect(response).to match_json_schema('stock')
+          expect(stock.reload.bearer).to eq Bearer.find_by(name: params[:bearer][:name] )
+        end
+      end
     end
 
     context 'with invalid params' do
