@@ -2,7 +2,7 @@ module Api
   module V1
     class StocksController < BaseController
       def index
-        stocks = Stock.all
+        stocks = Stock.limit(100)
 
         render json: StocksRepresenter.for_collection.prepare(stocks).to_json
       end
