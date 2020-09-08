@@ -25,6 +25,7 @@ RSpec.describe '/api/v1/stocks', type: :request do
 
       it 'creates a stock record' do
         post '/api/v1/stocks', params: params
+        expect(response.status).to eq 201
         expect(response).to match_json_schema('stock')
       end
     end
@@ -35,9 +36,55 @@ RSpec.describe '/api/v1/stocks', type: :request do
           name: nil
         }
       end
+      let(:expected_error) do
+        {
+          name: ["must be a string"],
+          bearer: ["is missing"]
+        }.to_json
+      end
 
-      it 'creates a stock record' do
+      it 'fails with 422' do
         post '/api/v1/stocks', params: params
+        expect(response.status).to be 422
+      end
+    end
+  end
+
+  describe 'PATCH /stocks/:id' do
+    let(:bearer) { create(:bearer) }
+    let(:stock) { create(:stock, bearer: bearer) }
+
+    context 'with valid params' do
+      let(:params) do
+        {
+          name: 'updated name'
+        }
+      end
+
+      it 'updates a stock record' do
+        patch "/api/v1/stocks/#{stock.id}", params: params
+
+        expect(response.status).to eq 200
+        expect(JSON.parse(response.body)["data"]["attributes"]["name"]).to eq params[:name]
+        expect(response).to match_json_schema('stock')
+      end
+    end
+
+    context 'with invalid params' do
+      let(:params) do
+        {
+          name: nil
+        }
+      end
+      let(:expected_error) do
+        {
+          name: ["must be a string"]
+        }.to_json
+      end
+
+      it 'fails with 422' do
+        patch "/api/v1/stocks/#{stock.id}", params: params
+        expect(response.status).to be 422
       end
     end
   end
