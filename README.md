@@ -35,6 +35,7 @@ Request data              +--------------------+         |           +----------
 
 ### Technical notes
 
+- Rails app generated in API mode to skip redundant configs and files
 - API 100% covered by integration specs
 - Custom JSON schema matcher has been implemented to thoroughly verify the API response structure
 - For complicated actions (e.g Stocks::Create/Update), unit tests have been created, all external dependencies are mocked
