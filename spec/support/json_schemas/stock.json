@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+      "data"
+  ],
+  "properties": {
+    "data": {
+        "type": "object",
+        "required": [
+            "id",
+            "attributes"
+        ],
+        "properties": {
+            "attributes": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "bearer",
+                    "reference"
+                ]
+            }
+        }
+    }
+  }
+}
