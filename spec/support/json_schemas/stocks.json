@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "required": [
+      "data"
+  ],
+  "properties": {
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+            "attributes"
+        ],
+        "properties": {
+          "attributes": {
+              "type": "object",
+              "required": [
+                  "name",
+                  "reference"
+              ]
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
